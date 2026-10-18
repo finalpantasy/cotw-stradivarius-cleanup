@@ -2,7 +2,7 @@
 
 An experimental, copy-only Python tool for removing the unwanted **.270 Stradivarius** from a disposable theHunter: Call of the Wild profile. It prepares a separate output file and a review manifest; it never deploys a save, starts the game, changes Steam Cloud, or edits installed mods.
 
-This is a **post-grant cleanup**, not an automatic new-character grant-prevention mod. In the observed test, removal persisted through two full loads, including a control using unmodified Rookie Warden - Zero-to-Hero Edition v1.0.2. That is limited evidence for the tested build, not a guarantee across updates, maps or entitlements. See [test notes](TEST_NOTES.md).
+This is a **post-grant cleanup**, not an automatic new-character grant-prevention mod. In the observed test, removal persisted through two full loads, including a control using unmodified Rookie Warden – Zero-to-Hero Edition v1.0.2. That is limited evidence for the tested build, not a guarantee across updates, maps or entitlements. See [test notes](TEST_NOTES.md).
 
 ## Exact target and supported format
 

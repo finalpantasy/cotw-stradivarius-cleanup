@@ -1,6 +1,6 @@
 # Sources
 
-- [Rookie Warden - Zero-to-Hero Edition posts](https://www.nexusmods.com/thehuntercallofthewild/mods/1138?tab=posts): reported distinction between store overhaul and direct legacy storage grants.
+- [Rookie Warden – Zero-to-Hero Edition posts](https://www.nexusmods.com/thehuntercallofthewild/mods/1138?tab=posts): reported distinction between store overhaul and direct legacy storage grants.
 - [Official December 2017 announcement](https://store.steampowered.com/news/posts/?appids=518790&enddate=1513947146): Stradivarius community reward context.
 - [Pinned Mod Builder name map](https://github.com/RyMaxim/cotw-mod-builder/blob/3ac2b0c8ea61c822f47bcdd6ad54f3ab7a65adeb/modbuilder/name_map.yaml): variant naming.
 - [Pinned DECA ADF format implementation](https://github.com/RyMaxim/cotw-mod-builder/blob/3ac2b0c8ea61c822f47bcdd6ad54f3ab7a65adeb/deca/ff_adf.py): public type/instance layout reference.

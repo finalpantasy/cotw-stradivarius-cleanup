@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+input/
+output/
+.local-verification/
+Saves/
+thp_player_profile_adf
+*.bin
+*.7z
+*.zip
+.env

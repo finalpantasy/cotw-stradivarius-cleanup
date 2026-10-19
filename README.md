@@ -1,8 +1,26 @@
-# COTW Stradivarius selective save cleanup
+# COTW Stradivarius new-character patch and save cleanup
 
-An experimental, copy-only Python tool for removing the unwanted **.270 Stradivarius** from a disposable theHunter: Call of the Wild profile. It prepares a separate output file and a review manifest; it never deploys a save, starts the game, changes Steam Cloud, or edits installed mods.
+Two source-only Python tools for the unwanted **.270 Stradivarius** in theHunter: Call of the Wild with Rookie Warden - Zero-to-Hero Edition v1.0.2. Each prepares a separate output and review manifest. Neither automatically deploys files, starts the game, changes Steam Cloud or patches the executable.
 
-This is a **post-grant cleanup**, not an automatic new-character grant-prevention mod. In the observed test, removal persisted through two full loads, including a control using unmodified Rookie Warden – Zero-to-Hero Edition v1.0.2. That is limited evidence for the tested build, not a guarantee across updates, maps or entitlements. See [test notes](TEST_NOTES.md).
+**For new characters:** `prepare_new_character_patch.py` changes one grant-related flag in the equipment table. Two independently created fresh characters did not receive the rifle, and it remained absent after a full restart, without inventory cleanup. A separate lock-mode change failed. The successful patch keeps the original lock mode, $7,000 price, reward table and starting loadout. See [test notes](TEST_NOTES.md) for the exact coverage and remaining limits.
+
+**For existing characters:** `prepare_selective_rifle_cleanup.py` remains available as a separate post-grant cleanup. The equipment patch does not remove a rifle that a save already owns.
+
+## Prepare the new-character patch
+
+Use Python 3.10 or newer; no additional packages. Extract your own untouched Rookie Warden v1.0.2 archive to a working folder. Run:
+
+```sh
+python prepare_new_character_patch.py "Rookie Warden/dropzone/settings/hp_settings/equipment_data.bin" "output/equipment_data.bin"
+```
+
+Use your actual extracted path. The generator accepts only the exact reviewed source SHA-256 `00a489abf8c65f196e3959cd0a487d85c74bd182c8543383b72b7a64dd2886e6`; it rejects other versions or already modified tables. It derives the target property from the RTPC structure, verifies the weapon name and node ID, changes uint32 property `0x3c814744` from 1 to 0, and requires exactly one changed byte. Its public property name is unknown; the isolated test identifies its grant-related effect.
+
+Review the generated manifest. The output SHA-256 must be `733ae0959b6c4f254c80328d7408530e6332cb808933f00df75ac4e3b6813edd`.
+
+With the game closed, back up your complete saves and current mod setup, then replace only `dropzone/settings/hp_settings/equipment_data.bin` in the **same unmodified Rookie Warden v1.0.2 setup** with the generated copy. Use the mod's normal launch instructions. Do this before creating a new character. Avoid replacing a table from a different version or another mod: this narrow generator does not merge changes.
+
+Rollback restores your backed-up original equipment table. Keep complete save backups too; a later grant reconciliation or older save restore can change ownership. The game/mod binary is not included in this repository. Normal Huntsman .270 access remains available for caliber-required missions; ordinary purchase and quest completion have not been runtime tested.
 
 ## Exact target and supported format
 
@@ -13,7 +31,7 @@ This is a **post-grant cleanup**, not an automatic new-character grant-preventio
 
 The Huntsman (`_01`) and Warden (`_02`) are distinct weapons. Unknown/older builds and unexpected layouts are rejected. No weapon-specific byte offset is assumed: profile field offsets come from the embedded schema.
 
-## Prepare a copy
+## Prepare an existing-save cleanup copy
 
 Python 3.10 or newer, standard library only. Close the game normally and preserve a **complete coherent save-folder backup** first. Work on a disposable copy, never the only copy of a real profile.
 
@@ -51,6 +69,6 @@ Keep the normal Huntsman .270 and ammunition available for caliber-required miss
 
 The supplied v1.0.2 tables already price Stradivarius at $7,000 while retaining the Xmas 2017 direct-give cell. Blanking only `custom_rewards!E12` (`reward_social_xmas2017`, `Equipment Give Directly`) did **not** prevent ownership on a fresh character in the tested setup. The successful cleanup control used all original mod files, so that overlay is not required by the observed cleanup result. It is not included here as a fix.
 
-Automatic prevention still needs tracing of the new-profile/legacy grant path. The source here offers a narrowly validated post-creation cleanup path without clearing entitlement or grant-history fields. [Sources and format references](SOURCES.md).
+The subsequent equipment-flag experiment prevented the observed initial grant while the original Xmas direct-give cell was retained. The grant routine itself has not been traced, and this does not establish the meaning of every use of that property on other equipment. Change only the identified rifle. The separate save cleanup retains entitlement and grant-history fields. [Sources and format references](SOURCES.md).
 
 No saves, game assets, mod binaries, screenshots, Steam configuration or credentials are included.

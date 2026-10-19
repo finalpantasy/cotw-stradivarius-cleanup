@@ -14,9 +14,26 @@ The cleanup output differed in nine decompressed bytes, entirely within the thre
 
 The final checkpoint loaded at a claimed Layton outpost with store/storage nearby. An earlier position-vector copy did not teleport a fresh character: startup reset its position. Copying map discovery state persisted, and normal in-game fast travel was used. No teleport implementation is shipped.
 
+## New-character prevention follow-up
+
+Fresh characters were created in independently empty save roots with the same account, installed game build and exact 67-file Rookie Warden setup. No inventory cleanup was performed in these prevention tests.
+
+| Candidate | Closed-save observation |
+| --- | --- |
+| Only Stradivarius `Locked` property (`0xb304f782`) 6 to 0 | Failed: a fresh level-1, XP-0, cash-0 character owned one Stradivarius. |
+| Only Stradivarius property `0x3c814744` 1 to 0; original Locked=6 retained | Passed first creation: Stradivarius absent from ownership/backpack; every other starting item and quantity matched the failed control when compared by item ID. |
+| Full restart with the successful flag candidate | Stradivarius remained absent from the resulting closed main profile. |
+| Independent repeat with the same flag candidate and another empty save root | Passed again: a different character ID, level 1, XP 0 and cash 0; Stradivarius absent, all other initial item IDs/quantities and inspected grant/unlock lists matched the control. |
+
+The flag candidate changes **one byte** of `equipment_data.bin`; every other byte, the reward table and initial loadout are unchanged. Its public property name is not established. The test supports a grant-related effect for this item, without identifying the full executable path or claiming the flag means the same thing for other equipment. Both successful fresh creations used Layton on the same account and build; other starting reserves/accounts remain untested.
+
+`EquipmentUnlocked`, `GivenDLCItems` and `UnlockedHuntClubEquipment` matched between the two initial profiles. The second profile used no inventory edits. After that first creation had been preserved, only its position vector and Layton map-discovery file were copied for an optional outpost-access check; that position copy again loaded at spawn, and is not shipped. The restarted profile gained one normal starting caller through ordinary game initialization; this is not described as a byte-identical profile comparison.
+
+The source-only patch generator reproduced the exact runtime candidate, rejected an existing output without changing it, and rejected an unsupported source hash without creating output. No proprietary table or save is included.
+
 ## Limits
 
-- One disposable profile, current code build 3331010 / PlayerProfileData_22 / wrapped ADF4.
+- Current code build 3331010 / PlayerProfileData_22 / wrapped ADF4. Multiple independent profiles were used for the prevention follow-up; the earlier cleanup test used one profile.
 - No map-change, ordinary Huntsman purchase, .270 quest-completion or comprehensive paid-DLC runtime tests.
 - The test does not identify the executable grant routine or prove which initialization path reads the reward table.
 - Store UI was owner-confirmed after cleanup; the persistence checks use decoded closed-save possession fields. There is no claim that changing a store price removes persisted inventory.

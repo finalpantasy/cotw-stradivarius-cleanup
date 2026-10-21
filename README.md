@@ -1,5 +1,7 @@
 # COTW Stradivarius new-character patch and save cleanup
 
+[![Support me on Ko-fi](https://img.shields.io/badge/Ko--fi-buy%20me%20a%20coffee-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/finalpantasy)
+
 Two source-only Python tools for the unwanted **.270 Stradivarius** in theHunter: Call of the Wild with Rookie Warden - Zero-to-Hero Edition v1.0.2. Each prepares a separate output and review manifest. Neither automatically deploys files, starts the game, changes Steam Cloud or patches the executable.
 
 **For new characters:** `prepare_new_character_patch.py` changes one grant-related flag in the equipment table. Two independently created fresh characters did not receive the rifle, and it remained absent after a full restart, without inventory cleanup. A separate lock-mode change failed. The successful patch keeps the original lock mode, $7,000 price, reward table and starting loadout. See [test notes](TEST_NOTES.md) for the exact coverage and remaining limits.
@@ -72,3 +74,7 @@ The supplied v1.0.2 tables already price Stradivarius at $7,000 while retaining 
 The subsequent equipment-flag experiment prevented the observed initial grant while the original Xmas direct-give cell was retained. The grant routine itself has not been traced, and this does not establish the meaning of every use of that property on other equipment. Change only the identified rifle. The separate save cleanup retains entitlement and grant-history fields. [Sources and format references](SOURCES.md).
 
 No saves, game assets, mod binaries, screenshots, Steam configuration or credentials are included.
+
+## Support
+
+Free hobby project. If it helps you, you can [buy me a coffee on Ko-fi](https://ko-fi.com/finalpantasy). Thank you!
